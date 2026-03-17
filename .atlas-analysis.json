@@ -1,0 +1,67 @@
+{
+  "projectType": "api-service",
+  "projectName": "ROMP-GPS",
+  "projectDescription": "A Spring Boot + Netty TCP server that receives real-time GPS data from GT06 protocol devices and forwards it to a backend service via HTTP.",
+  "theme": "aspen",
+  "primaryColor": "#1A6B3C",
+  "lightColor": "#2ECC71",
+  "darkColor": "#0D3B22",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": ["introduction", "quickstart", "deployment"]
+          },
+          {
+            "group": "Architecture",
+            "pages": ["architecture/overview", "architecture/tcp-server", "architecture/gt06-protocol"]
+          },
+          {
+            "group": "Configuration",
+            "pages": ["configuration/application-properties", "configuration/docker"]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "HTTP Endpoints",
+            "pages": ["api/overview", "api/receive-location"]
+          },
+          {
+            "group": "GT06 Protocol",
+            "pages": ["api/gt06-login", "api/gt06-location", "api/gt06-heartbeat"]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "TCP server on port 9000 accepting GT06 protocol GPS device connections",
+    "GT06 binary protocol parsing: login, location, and heartbeat packets",
+    "CRC-16 checksum calculation and validation",
+    "IMEI decoding from binary format",
+    "GPS coordinate conversion (raw integer to decimal degrees with hemisphere support)",
+    "Heartbeat ACK responses to keep devices connected",
+    "HTTP forwarding of parsed GPS data to a configurable backend service",
+    "Spring Boot Actuator integration for health monitoring",
+    "Docker support for containerized deployment"
+  ],
+  "publicApiSurface": [
+    "POST /data/ubicacion — Receive GPS location data (JSON body: GPSData)",
+    "TCP port 9000 — GT06 protocol binary socket for GPS device connections",
+    "Protocol 0x01 — Login packet handler (IMEI registration)",
+    "Protocol 0x12 — Location packet handler (lat/lon/speed/timestamp)",
+    "Protocol 0x13 — Heartbeat packet handler (ACC status, GSM signal)",
+    "GET /actuator — Spring Boot Actuator health and metrics endpoints",
+    "GPSData model: imei, timestamp, latitud, longitud, velocidad, gpsValido, acc, corteMotor",
+    "GT06Utils.decodificarIMEI(byte[]) — Decode IMEI from BCD bytes",
+    "GT06Utils.calcularCRC(byte[]) — CRC-16 checksum for packet validation",
+    "GT06Utils.ACK(short serial) — Build login acknowledgement packet",
+    "GT06Utils.ACKHeartbeat(short serial) — Build heartbeat acknowledgement packet"
+  ]
+}
